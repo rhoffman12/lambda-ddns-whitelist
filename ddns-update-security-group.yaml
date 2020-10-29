@@ -1,0 +1,23 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: 'AWS::Serverless-2016-10-31'
+Description: v0.1
+Resources:
+  ddnsupdatesecuritygroup:
+    Type: 'AWS::Serverless::Function'
+    Properties:
+      Handler: index.handler
+      Runtime: nodejs12.x
+      CodeUri: .
+      Description: v0.1
+      MemorySize: 128
+      Timeout: 3
+      Role: 'arn:aws:iam::076744366174:role/service-role/lambda-securitygroupedit'
+      Events:
+        Schedule1:
+          Type: Schedule
+          Properties:
+            Schedule: rate(1 hour)
+      Environment:
+        Variables:
+          ddns_domain: YOUR.DOMAIN.HERE
+          whitelist_sg: sg-000000000000
